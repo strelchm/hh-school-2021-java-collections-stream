@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  */
 public class Task1 implements Task {
 
-  private List<Person> findOrderedPersons(List<Integer> personIds) {  // {strealchm} O(n) complexity (depends of iterating through id array elements). It can t be faster
+  private List<Person> findOrderedPersons(List<Integer> personIds) {  // {strelchm} O(n) complexity (depends of iterating through id array elements). It can t be faster
     Map<Integer, Person> persons = PersonService.findPersons(personIds).stream().collect(Collectors.toMap(Person::getId, p -> p));
     return personIds.stream().map(persons::get).collect(Collectors.toList());
   }

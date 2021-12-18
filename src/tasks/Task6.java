@@ -21,13 +21,14 @@ public class Task6 implements Task {
   private Set<String> getPersonDescriptions(Collection<Person> persons,
                                             Map<Integer, Set<Integer>> personAreaIds,
                                             Collection<Area> areas) {
+    Map<Integer, String> areaNames = areas.stream().collect(Collectors.toMap(Area::getId, Area::getName));
     return persons.stream()
-            .flatMap(person -> personAreaIds.get(person.getId())
-                    .stream()
-                    .map(regionId -> String.format(PERSON_DESCRIPTION_FORMAT, person.getFirstName(), findAreaById(regionId, areas)))
+            .flatMap(person -> personAreaIds.get(person.getId()).stream()
+                    .map(regionId -> String.format(PERSON_DESCRIPTION_FORMAT, person.getFirstName(), areaNames.get(regionId)))
             ).collect(Collectors.toSet());
   }
 
+  @Deprecated // {strelchm} notefficient depricated iteration through collection in every outer stream step
   private static String findAreaById(Integer regionId, Collection<Area> areas) {
     return areas.stream()
             .filter(z -> z.getId().equals(regionId))
